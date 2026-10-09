@@ -1,45 +1,80 @@
-# типичное для операционных систем
-__MACOSX/
+
+# ==========================================
+# 1C-Bitrix: cache and temporary files
+# ==========================================
+
+/bitrix/cache/
+/bitrix/managed_cache/
+/bitrix/stack_cache/
+/bitrix/html_pages/
+/bitrix/backup/
+/bitrix/updates/
+/bitrix/tmp/
+/bitrix/sessions/
+
+# ==========================================
+# Uploads and user-generated files
+# ==========================================
+
+/upload/
+
+# ==========================================
+# Logs and temporary files
+# ==========================================
+
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+
+# ==========================================
+# Local environment and secrets
+# ==========================================
+
+.env
+.env.*
+!.env.example
+
+# Local configuration overrides: review before ignoring
+/bitrix/.settings_extra.php
+/local/php_interface/dbconn.php
+
+# ==========================================
+# IDE and OS
+# ==========================================
+
+.idea/
+.vscode/
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Исключаем некоторые бинарники и ненужные файлы из под версионного контроля. Понятно, что всего не перечислить, но хоть что-то
-*.csv
-*.gz
-*.tar
-*.bat
-*.dat
-*.pdf
-*.psd
-*.log
-*.txt
-!robots.txt
-*.flv
-*.wmv
-*.xlsx
-*.xls
-*.docx
-*.doc
-*.phar
-*.mmdb
+# ==========================================
+# Dependencies and build artifacts
+# ==========================================
 
-# Настройки проекта в IDE не распространяем между разработчиками
-/.idea/
-
-# Логи не стоит версионировать
-/logs/
-
-# Исключаем внешние библиотеки и зависимости. Они должны устанавливаться при деплое
-/bower_components/
 /node_modules/
 /vendor/
+/dist/
+/build/
 
-# В корне сайта постоянно лежат какие-нибудь файлы верификации. В php-проектах обычно голые html файлы не используются для публикации реальных страниц
-/htdocs/*.html
+# ==========================================
+# Archives and dumps
+# ==========================================
 
-# Ядро нам не нужно версионировать, оно лежит в отдельном репозитории
-/htdocs/bitrix/
-/htdocs/upload/
+*.sql
+*.sql.gz
+*.dump
+*.zip
+*.tar
+*.tar.gz
 
-# Собранный фронтенд
-/htdocs/assets/build/
+# ==========================================
+# Local development files
+# ==========================================
+
+/docker-compose.override.yml
+/.vagrant/
+
