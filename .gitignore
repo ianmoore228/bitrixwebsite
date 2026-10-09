@@ -3,14 +3,8 @@
 # 1C-Bitrix: cache and temporary files
 # ==========================================
 
-/bitrix/cache/
-/bitrix/managed_cache/
-/bitrix/stack_cache/
-/bitrix/html_pages/
-/bitrix/backup/
-/bitrix/updates/
-/bitrix/tmp/
-/bitrix/sessions/
+
+/bitrix/
 
 # ==========================================
 # Uploads and user-generated files
