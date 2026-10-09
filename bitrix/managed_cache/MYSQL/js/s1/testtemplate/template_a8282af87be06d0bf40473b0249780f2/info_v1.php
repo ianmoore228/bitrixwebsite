@@ -1,0 +1,1 @@
+<?php $filesInfo = ["/local/templates/testtemplate" => "17912814634096",]; ?>

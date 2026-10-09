@@ -1,0 +1,36 @@
+services:
+  web:
+    image: php:8.2-apache
+    container_name: testsite-web
+    ports:
+      - "8081:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+    command: >
+      bash -c "
+      apt-get update &&
+      apt-get install -y ca-certificates &&
+      update-ca-certificates &&
+      docker-php-ext-install mysqli &&
+      a2enmod rewrite &&
+      apache2-foreground
+      "
+
+  db:
+    image: mariadb:10.11
+    container_name: testsite-db
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: testsite
+      MARIADB_USER: testsite
+      MARIADB_PASSWORD: testsite
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+
+

@@ -1,0 +1,46 @@
+<?
+$aMenuLinks = array(
+    array(
+        "Главная",
+        "/",
+        array(),
+        array(),
+        ""
+    ),
+    array(
+        "О нас",
+        "/about-us/",
+        array(),
+        array(),
+        ""
+    ),
+    array(
+        "Услуги",
+        "/services/",
+        array(),
+        array(),
+        ""
+    ),
+    array(
+        "Портфолио",
+        "/portfolio/",
+        array(),
+        array(),
+        ""
+    ),
+    array(
+        "Блог",
+        "/blog/",
+        array(),
+        array(),
+        ""
+    ),
+    array(
+        "Контакты",
+        "/contacts/",
+        array(),
+        array(),
+        ""
+    )
+);
+?>
