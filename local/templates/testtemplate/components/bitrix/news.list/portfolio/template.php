@@ -15,10 +15,26 @@ $heading = $iblock['NAME'] ?? 'Портфолио';
 $description = $iblock['DESCRIPTION'] ?? '';
 
 $items = $arResult['ITEMS'] ?? [];
-//
-//echo '<pre>';
-//print_r($items);
-//echo '</pre>';
+
+$sections = [];
+
+$rsSections = \CIBlockSection::GetList(
+        ['SORT' => 'ASC', 'NAME' => 'ASC'],
+        [
+                'IBLOCK_ID' => $iblockId,
+                'ACTIVE' => 'Y',
+                'GLOBAL_ACTIVE' => 'Y',
+        ],
+        false,
+        ['ID', 'NAME', 'CODE']
+);
+
+while ($section = $rsSections->Fetch()) {
+    if (!empty($section['CODE'])) {
+        $sections[] = $section;
+    }
+}
+
 ?>
 
 <section class="work-area pt-90 pb-60" id="portfolio">
@@ -35,34 +51,48 @@ $items = $arResult['ITEMS'] ?? [];
 
         <div class="row">
             <div class="col-lg-12">
-                <div class="portfolio-menu brand-filter text-center mb-70">
-                    <div class="filter" data-filter="all">Все</div>
-                    <div class="filter" data-filter=".landing">Лендинги</div>
-                    <div class="filter" data-filter=".internet_shop">Интренет магазины</div>
-                    <div class="filter" data-filter=".promo">Промо сайты</div>
-                    <div class="filter" data-filter=".corporative_site">Корпоративные порталы</div>
+
+                    <div class="portfolio-menu brand-filter text-center mb-70">
+                        <div class="filter" data-filter="all">Все</div>
+
+                        <?php foreach ($sections as $section): ?>
+                            <div
+                                    class="filter"
+                                    data-filter=".<?= htmlspecialcharsbx($section['CODE']) ?>"
+                            >
+                                <?= htmlspecialcharsbx($section['NAME']) ?>
+                            </div>
+                        <?php endforeach; ?>
+
                 </div>
             </div>
 
             <div id="Container">
                 <?php foreach ($items as $arItem): ?>
                     <?php
-//                    $title = $arItem['NAME'];
-////                    $subtitle = $arItem['PREVIEW_TEXT'] ?? '';
-//
-//                    $imageSrc = $arItem['PREVIEW_PICTURE']['SRC'];
-//                    echo $arItem['NAME'];
-//
-//                    echo $arItem['PREVIEW_PICTURE']['SRC'];
-//
-//                    echo '<img src="' . htmlspecialcharsbx($imageSrc) . '" alt="">';
+                    $imageSrc = $arItem['PREVIEW_PICTURE']['SRC'] ?? '';
+
+                    $sectionId = (int)($arItem['IBLOCK_SECTION_ID'] ?? 0);
+                    $sectionCode = '';
+
+                    foreach ($sections as $section) {
+                        if ((int)$section['ID'] === $sectionId) {
+                            $sectionCode = $section['CODE'];
+                            break;
+                        }
+                    }
                     ?>
 
-
-                    <div class="col-md-4 col-sm-6 col-xs-12 mb-30 mix landing promo">
+                    <div class="col-md-4 col-sm-6 col-xs-12 mb-30 mix <?= htmlspecialcharsbx($sectionCode) ?>">
                         <div class="portfolio-wrapper portfolio-title">
                             <div class="portfolio-img">
-                                <img src="<?= $arItem['PREVIEW_PICTURE']['SRC']?>" alt=""/>
+                                <?php if ($imageSrc !== ''): ?>
+                                    <img
+                                            src="<?= htmlspecialcharsbx($imageSrc) ?>"
+                                            alt="<?= htmlspecialcharsbx($arItem['NAME'] ?? '') ?>"
+                                    >
+                                <?php endif; ?>
+
                                 <div class="work-text brand-bg">
                                     <div class="inner-text">
                                         <a class="view-portfolio image-link" href="#">
@@ -71,11 +101,13 @@ $items = $arResult['ITEMS'] ?? [];
                                     </div>
                                 </div>
                             </div>
+
                             <div class="portfolio-heading pd-15">
                                 <h4 class="mb-10">
-                                    <a href="#">Green Planet</a>
+                                    <a href="#">
+                                        <?= htmlspecialcharsbx($arItem['NAME'] ?? '') ?>
+                                    </a>
                                 </h4>
-                                <h5 class="m-0">Дизайн</h5>
                             </div>
                         </div>
                     </div>
